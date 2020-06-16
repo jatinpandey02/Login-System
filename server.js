@@ -39,13 +39,13 @@ app.post('/register',function(req,res){
 app.post('/login',(req,res)=>{
     u = users.find(user=> user.email==req.body.email)
     if(u==null){
-        res.redirect('/login')
+        res.render('login.ejs',{error:"Id not found"})
     }
     else if(u.password==req.body.password){
         res.send('Shi Password')
     }
     else{
-        res.send('Galat Password')
+        res.render('login.ejs',{error:"Wrong Password"})
     }
 })
 
