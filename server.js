@@ -1,6 +1,7 @@
 const express = require("express")
-app = express()
+const app = express()
 const expressLayout=require('express-ejs-layouts')
+const bcrypt = require('bcrypt')
 
 console.log("Working")
 
@@ -26,7 +27,7 @@ app.get('/register',function(req,res){
 app.post('/register',function(req,res){
     var email=req.body.email
     var name=req.body.name
-    var password=req.body.password
+    var password=bcrypt.hashSync(req.body.password,10)
     users.push({
         "name":name,
         "email":email,
@@ -41,11 +42,11 @@ app.post('/login',(req,res)=>{
     if(u==null){
         res.render('login.ejs',{error:"Id not found"})
     }
-    else if(u.password==req.body.password){
-        res.send('Shi Password')
+    else if(bcrypt.compareSync(req.body.password,u.password)){
+        res.send('You are in')
     }
     else{
-        res.render('login.ejs',{error:"Wrong Password"})
+        res.render('login.ejs',{error:'Wrong Password'})
     }
 })
 

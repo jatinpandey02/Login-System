@@ -9,6 +9,7 @@
   "author": "Jatin Pandey",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "ejs": "^3.0.2",
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0"
