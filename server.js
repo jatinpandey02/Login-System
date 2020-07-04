@@ -30,12 +30,19 @@ app.get('/register',function(req,res){
 })
 
 app.post('/register',function(req,res){
+    if(!req.body.name||!req.body.email||!req.body.password||!req.body.password2){
+        res.render('register.ejs',{error:"Fill all forms"})
+    }
+    else if(req.body.password!=req.body.password2){
+        res.render('register.ejs',{error:"Password doesn't match"})
+    }
+    else{
     var email=req.body.email
     var name=req.body.name
     var password=bcrypt.hashSync(req.body.password,10)
     User.findOne({email:email}).then(user=>{
         if(user){
-            res.render('/register.ejs',{error:"User with email id exist"})
+            res.render('register.ejs',{error:"User with email id exist"})
         }
         else{
             const newUser = new User({
@@ -44,10 +51,11 @@ app.post('/register',function(req,res){
                 password
             })
             newUser.save()
+            res.redirect("/login")
         }
     })
-    res.redirect("/login")
-    console.log(users)
+    console.log(User)
+    }
 })
 
 app.post('/login',(req,res)=>{
