@@ -5,6 +5,9 @@
           <i class="fas fa-user-plus">Register</i> 
         </h1>
         <form action="/register" method="POST">
+          <%if(typeof error=='string'){%>
+            <p><%=error %></p>
+          <% } %> 
           <div class="form-group">
             <label for="name">Name</label>
             <input
